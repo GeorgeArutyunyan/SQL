@@ -1,43 +1,60 @@
-CREATE TABLE IF NOT EXISTS Gendre(
-gendre_id INT PRIMARY KEY,
-name_gendre VARCHAR(30) NOT NULL
+CREATE TABLE IF NOT EXISTS genre(
+	genre_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	name_genre VARCHAR(30) UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Singer(
-singer_id INT PRIMARY KEY,
-name VARCHAR(30) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS singer(
+	singer_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	name_singer VARCHAR(30) UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Gendre_singer(
-gendre_id INT NOT NULL REFERENCES Gendre(gendre_id),
-singer_id INt NOT NULL REFERENCES Singer(singer_id),
-CONSTRAINT pk PRIMARY KEY (gendre_id, singer_id)
+CREATE TABLE IF NOT EXISTS genre_singer(
+	genre_singer_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	genre_id INT,
+	singer_id INT,
+	FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
+	FOREIGN KEY (singer_id)	REFERENCES singer(singer_id) 
 );
 
-CREATE TABLE IF NOT EXISTS Album(
-album_id INT PRIMARY KEY,
-name VARCHAR(30) NOT NULL,
-release_year DATE
+CREATE TABLE IF NOT EXISTS album(
+	album_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	album_name VARCHAR(30) UNIQUE NOT NULL,
+	album_year DATE
 );
 
-CREATE TABLE IF NOT EXISTS Track(
-track_id INT PRIMARY KEY,
-duration DECIMAL(5, 2)
+CREATE TABLE IF NOT EXISTS singer_in_album(
+	singer_in_album_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	singer_id INT,
+	album_id INT,
+	FOREIGN KEY (singer_id) REFERENCES singer(singer_id),
+	FOREIGN KEY (album_id) REFERENCES album(album_id)
 );
 
-CREATE TABLE IF NOT EXISTS Singers_in_Albums(
-singer_id INT NOT NULL,
-album_id INT NOT NULL,
-FOREIGN KEY (singer_id) REFERENCES Singer(singer_id),
-FOREIGN KEY (album_id) REFERENCES Album(album_id)
+CREATE TABLE IF NOT EXISTS track(
+	track_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	track_name VARCHAR(30) UNIQUE NOT NULL,
+	track_length INT NOT NULL CHECK(track_length > 120),
+	album_id INT,
+	FOREIGN KEY (album_id) REFERENCES album(album_id)
 );
 
-CREATE TABLE IF NOT EXISTS Compilation(
-compilation_id INT PRIMARY KEY,
-name VARCHAR(30) NOT NULL,
-release_date DATE NOT NULL,
-album_id INT NOT NULL,
-track_id INT NOT NULL,
-FOREIGN KEY (album_id) REFERENCES Album(album_id),
-FOREIGN KEY (track_id) REFERENCES Track(track_id)
+CREATE TABLE IF NOT EXISTS compilation(
+	compilation_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	compilation_name VARCHAR(30) NOT NULL,
+	compilation_year DATE CHECK(compilation_year >= '1995-01-01')
 );
+
+CREATE TABLE IF NOT EXISTS compilation_singer(
+	compilation_singer_id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	compilation_id INT,
+	track_id INT,
+	FOREIGN KEY (compilation_id) REFERENCES compilation(compilation_id),
+	FOREIGN KEY (track_id) REFERENCES track(track_id)
+);
+
+
+
+
+
+
+
