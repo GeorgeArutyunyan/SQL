@@ -1,0 +1,16 @@
+[
+  {"table": "publisher", "pk": 1, "fields": {"name": "Stephen King"}},
+  {"table":  "publisher", "pk": 2, "fields": {"name": "Tolkien"}},
+  {"table":  "book", "pk": 1, "fields": {"title": "The lord of the Ring", "publisher_id": 2}},
+  {"table": "book", "pk": 2, "fields": {"title":  "The Dark Tower", "publisher_id": 1}},
+  {"table":  "book", "pk": 3, "fields": {"title": "Outsider", "publisher_id": 1}},
+  {"table":  "shop", "pk": 1, "fields": {"shop_name": "Ozon"}},
+  {"table":  "shop", "pk": 2, "fields": {"shop_name": "Yandex market"}},
+  {"table": "stock", "pk": 1, "fields": {"book_id": 1, "shop_id": 1, "count": 93}},
+  {"table": "stock", "pk": 2, "fields": {"book_id": 2, "shop_id": 1, "count": 91}},
+  {"table": "stock", "pk": 3, "fields": {"book_id": 3, "shop_id": 2, "count": 19}},
+  {"table": "sale", "pk": 1, "fields": {"price": 2.12, "date_sale": "2018-10-25T09:45:24.552Z",
+    "stock_id": 2, "count": 72}},
+  {"table": "sale", "pk": 2, "fields": {"price": 2.42, "date_sale": "2018-10-25T09:51:04.113Z",
+    "stock_id": 1, "count": 19}}
+]
